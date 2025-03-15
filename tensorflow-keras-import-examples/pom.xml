@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+<?xml version="1.0" encoding="UTF-8"?><!--
   ~
   ~ This program and the accompanying materials are made available under the
   ~  terms of the Apache License, Version 2.0 which is available at
@@ -20,9 +19,8 @@ information regarding copyright ownership.
   ~
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.deeplearning4j</groupId>
@@ -36,16 +34,18 @@ information regarding copyright ownership.
         <!-- Change the nd4j.backend property to nd4j-cuda-X-platform to use CUDA GPUs -->
         <nd4j.backend>nd4j-native</nd4j.backend>
         <!-- <nd4j.backend>nd4j-cuda-10.2-platform</nd4j.backend> -->
-        <java.version>1.8</java.version>
-        <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
+        <java.version>21</java.version>
+        <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
         <maven.minimum.version>3.3.1</maven.minimum.version>
         <exec-maven-plugin.version>1.4.0</exec-maven-plugin.version>
         <maven-shade-plugin.version>2.4.3</maven-shade-plugin.version>
         <logback.version>1.1.7</logback.version>
+        <!--   Tensorflow-platform version is combined 1.15.5-1.5.8 -->
         <javacpp.version>1.5.7</javacpp.version>
         <tensorflow.version>1.15.5</tensorflow.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit.version>5.8.0-M1</junit.version>
+        <junit.version>5.11.0</junit.version>
+        <surefire-junit-platform.version>3.5.2</surefire-junit-platform.version>
     </properties>
 
     <repositories>
@@ -61,7 +61,6 @@ information regarding copyright ownership.
                 <updatePolicy>daily</updatePolicy>  <!-- Optional, update daily -->
             </snapshots>
         </repository>
-
 
 
     </repositories>
@@ -124,12 +123,12 @@ information regarding copyright ownership.
             <scope>test</scope>
         </dependency>
 
-        <dependency>
+<!--        <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
-        </dependency>
+        </dependency>-->
 
     </dependencies>
 
@@ -139,13 +138,13 @@ information regarding copyright ownership.
 
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
+                <version>3.5.2</version>
                 <inherited>true</inherited>
                 <dependencies>
                     <dependency>
                         <groupId>org.apache.maven.surefire</groupId>
                         <artifactId>surefire-junit-platform</artifactId>
-                        <version>3.0.0-M5</version>
+                        <version>${surefire-junit-platform.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
@@ -163,7 +162,9 @@ information regarding copyright ownership.
                             <rules>
                                 <requireMavenVersion>
                                     <version>[${maven.minimum.version},)</version>
-                                    <message>********** Minimum Maven Version is ${maven.minimum.version}. Please upgrade Maven before continuing (run "mvn --version" to check). **********</message>
+                                    <message>********** Minimum Maven Version is ${maven.minimum.version}. Please
+                                        upgrade Maven before continuing (run "mvn --version" to check). **********
+                                    </message>
                                 </requireMavenVersion>
                             </rules>
                         </configuration>
@@ -223,12 +224,14 @@ information regarding copyright ownership.
                         </goals>
                         <configuration>
                             <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                <transformer
+                                    implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
                                     <resource>reference.conf</resource>
                                 </transformer>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                </transformer>
+                                <transformer
+                                    implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+                                <transformer
+                                    implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer"></transformer>
                             </transformers>
                         </configuration>
                     </execution>
@@ -254,7 +257,7 @@ information regarding copyright ownership.
                                         </goals>
                                     </pluginExecutionFilter>
                                     <action>
-                                        <ignore/>
+                                        <ignore />
                                     </action>
                                 </pluginExecution>
                             </pluginExecutions>
